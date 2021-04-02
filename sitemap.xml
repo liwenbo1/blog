@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://liwenbo1.github.io/blog/2021/04/01/my-test/</loc>
+    
+    <lastmod>2021-04-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://liwenbo1.github.io/blog/tags/index.html</loc>
     
     <lastmod>2021-04-02</lastmod>
@@ -15,13 +22,6 @@
     
   </url>
   
-  <url>
-    <loc>https://liwenbo1.github.io/blog/2021/04/01/my-test/</loc>
-    
-    <lastmod>2021-04-01</lastmod>
-    
-  </url>
-  
 
   <url>
     <loc>https://liwenbo1.github.io/blog</loc>
@@ -30,6 +30,13 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://liwenbo1.github.io/blog/tags/test/</loc>
+    <lastmod>2021-04-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
   
 
   

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Docker</title>
+    <url>/blog/2021/04/01/my-test/</url>
+    <content><![CDATA[<img src="https://i.loli.net/2021/02/22/yfPIF2NWzLu8gxm.png" alt="docker" width="500" height="313" align="bottom" />
+---
+
+<ol>
+<li><p>获取镜像</p>
+<p><code>docker pull nginx</code></p>
+</li>
+<li><p>列出镜像</p>
+<p><code>docker images</code></p>
+<span id="more"></span></li>
+<li><p> 使用镜像启动容器，并返回容器ID</p>
+</li>
+</ol>
+   <figure class="highlight plain"><div class="table-container"><table><tr><td class="code"><pre><span class="line">docker run -t -i mynginx &#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">root@0b2616b0e5a8:&#x2F;#</span><br></pre></td></tr></table></div></figure>
+
+<p>   ​    <label style="color: orange">返回容器的ID： 0b2616b0e5a8<label></p>
+<ol start="4">
+<li><p>启动后会进入容器内，使用 exit 退出</p>
+</li>
+<li><p>提交副本</p>
+<p><code>docker commit -m &quot;commit&quot; -a &quot;liwb&quot; 0b2616b0e5a8 mynginx:v2</code></p>
+<p><code>docker commit -m &quot;提交信息说明&quot; -a &quot;用户信息&quot; 容器ID 镜像的仓库名称：版本号</code></p>
+</li>
+<li><p>可重复第二步查看是否正常</p>
+</li>
+</ol>
+<hr>
+
+        <h5 id="利用Dockerfile-来创建镜像"   >
+          <a href="#利用Dockerfile-来创建镜像" class="heading-link"><i class="fas fa-link"></i></a><a href="#利用Dockerfile-来创建镜像" class="headerlink" title="利用Dockerfile 来创建镜像"></a><em>利用Dockerfile 来创建镜像</em></h5>
+      <ol>
+<li>编辑Dockerfile</li>
+</ol>
+<figure class="highlight dockerfile"><div class="table-container"><table><tr><td class="code"><pre><span class="line"><span class="comment"># this is a comment</span></span><br><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"><span class="keyword">MAINTAINER</span> Docker liwb &lt;wenbo_li@neusoft.com&gt;</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get -qq update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get -qqy install ruby ruby-dev</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> gem install sinatra</span></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><p>使用 # 来注释</p>
+</li>
+<li><p>FROM 指令告诉Docker使用哪个镜像作为基础</p>
+</li>
+<li><p>维护者的信息</p>
+</li>
+<li><p>RUN 开头的指令会在创建中运行，比如安装一些软件等</p>
+<hr>
+<p><strong>注意一个镜像不能超过127层</strong></p>
+</li>
+<li><p>此外还可以利用ADD命令复制本地文件到镜像</p>
+</li>
+<li><p>用 EXPOSE命令向外部开放端口</p>
+</li>
+<li><p>用 CMD命令来描述容器启动后运行的程序等</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="code"><pre><span class="line">ADD myApp &#x2F;var&#x2F;xxx</span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD [&quot;&#x2F;usr&#x2F;sbin&#x2F;xxx&quot;, &quot;-D&quot;, &quot;FOREGROUND&quot;]</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+<ol start="2">
+<li><p>生成镜像</p>
+<p><code>docker build -t=&quot;myimage:v2&quot; .</code></p>
+<p><label style="color: orange">‘.’  指代当前目录，也可替换为一个具体的Dockerfile路径<label></p>
+</li>
+<li><p>利用新创建的镜像来启动一个容器</p>
+<p><code>docker run -t -i myimage:v2 /bin/bash</code></p>
+</li>
+<li><p>修改镜像的标签</p>
+<p><code>docker tag 0b2616b0e5a8 myimage:v3</code></p>
+<p><code>docker tag 容器ID 名称：版本</code></p>
+</li>
+</ol>
+<hr>
+
+        <h5 id="从本地文件系统导入"   >
+          <a href="#从本地文件系统导入" class="heading-link"><i class="fas fa-link"></i></a><a href="#从本地文件系统导入" class="headerlink" title="从本地文件系统导入"></a><em>从本地文件系统导入</em></h5>
+      <p>要从本地文件系统导入一个镜像，可以收用openvz的模板来创建： openvz的模板下载地址为<span class="exturl"><a class="exturl__link"   href="http://openvz.org/Download/templates/precreated" >templates</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。</p>
+<p>比如，先下载了一个 ubuntu-14.04 的镜像，之后使用以下命令导入：</p>
+<p><code>cat ubuntu-14.04-x86_64-minimal.tar.gz  |docker import - ubuntu:14.04</code></p>
+<hr>
+
+        <h5 id="存出和载入Docker镜像"   >
+          <a href="#存出和载入Docker镜像" class="heading-link"><i class="fas fa-link"></i></a><a href="#存出和载入Docker镜像" class="headerlink" title="存出和载入Docker镜像"></a>存出和载入Docker镜像</h5>
+      <ol>
+<li><p>存出镜像</p>
+<p> <code>docker save -o nginx.tar nginx</code></p>
+</li>
+<li><p>载入镜像</p>
+<p> <code>docker load --imput nginx.tar</code></p>
+<p> 或者</p>
+<p> <code>docker load &lt; nginx.tar</code></p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+</search>
