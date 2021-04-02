@@ -9,7 +9,7 @@
           <a href="#Docker基础命令" class="heading-link"><i class="fas fa-link"></i></a><a href="#Docker基础命令" class="headerlink" title="Docker基础命令"></a>Docker基础命令</h5>
       <ol>
 <li><p>获取镜像</p>
-<figure class="highlight plain"><div class="table-container"><table><tr><td class="code"><pre><span class="line">cover_image</span><br></pre></td></tr></table></div></figure></li>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></div></figure></li>
 <li><p>列出镜像</p>
 <figure class="highlight plain"><div class="table-container"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></div></figure>
 
